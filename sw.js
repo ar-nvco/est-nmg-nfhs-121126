@@ -1,7 +1,7 @@
 /* NMG Revenue Estimate - offline support.
    When you update anything, change VERSION here AND APP_VERSION in index.html
    to the same number so devices pick up the new files. */
-const VERSION = "v6";
+const VERSION = "v7";
 const CACHE = "nmg-estimate-" + VERSION;
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 
