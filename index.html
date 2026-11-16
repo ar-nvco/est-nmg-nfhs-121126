@@ -325,7 +325,7 @@
    LOGO_SRC: paste a data URL (data:image/png;base64,...) to use the real
    logo. Leave empty to show the text wordmark.
    ===================================================================== */
-const APP_VERSION = "v4";  /* keep in sync with VERSION in sw.js */
+const APP_VERSION = "v6";  /* keep in sync with VERSION in sw.js */
 const CONFIG = {
   LOGO_SRC: "",  /* logo lives in the <img id="logoImg"> tag in the header */
   DEFAULT_SHARE: 50,
@@ -574,12 +574,12 @@ function buildReport(){
     </div></div>`;
 }
 
-/* PDF file name: NMG Revenue Estimate - School - City ST - 2026-11-16 1432 */
+/* PDF file name: School - City ST - NMG-NFHS Rev Est - 2026-11-16 1432 */
 function pdfFileName(){
   const v = venueParts();
   const d = new Date(), z = (n) => String(n).padStart(2, "0");
   const stamp = `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())} ${z(d.getHours())}${z(d.getMinutes())}`;
-  const parts = ["NMG Revenue Estimate", v.name || "Venue", v.loc.replace(",", ""), stamp].filter(Boolean);
+  const parts = [v.name || "Venue", v.loc.replace(",", ""), "NMG-NFHS Rev Est", stamp].filter(Boolean);
   return parts.join(" - ").replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ").trim();
 }
 const APP_TITLE = document.title;
