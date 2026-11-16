@@ -1,7 +1,7 @@
 /* NMG Revenue Estimate - offline cache.
    When you update prices or anything else, change VERSION (e.g. v2, v3)
    so devices pick up the new files the next time they open it online. */
-const VERSION = "v1";
+const VERSION = "v2";
 const CACHE = "nmg-estimate-" + VERSION;
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 

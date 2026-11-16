@@ -573,13 +573,22 @@ function buildReport(){
     </div></div>`;
 }
 
-function savePdf(){
-  buildReport();
+/* PDF file name: NMG Revenue Estimate - School - City ST - 2026-11-16 1432 */
+function pdfFileName(){
   const v = venueParts();
-  const old = document.title;
-  document.title = `NMG Revenue Estimate - ${v.name || "Venue"}`;  // default PDF filename
+  const d = new Date(), z = (n) => String(n).padStart(2, "0");
+  const stamp = `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())} ${z(d.getHours())}${z(d.getMinutes())}`;
+  const parts = ["NMG Revenue Estimate", v.name || "Venue", v.loc.replace(",", ""), stamp].filter(Boolean);
+  return parts.join(" - ").replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ").trim();
+}
+const APP_TITLE = document.title;
+function setPdfTitle(){ buildReport(); document.title = pdfFileName(); }
+function restoreTitle(){ document.title = APP_TITLE; }
+
+function savePdf(){
+  setPdfTitle();
   window.print();
-  setTimeout(() => { document.title = old; }, 1000);
+  setTimeout(restoreTitle, 1500);
 }
 
 /* ---------- Reset ---------- */
@@ -614,7 +623,8 @@ function confirmReset(){
   ["venue","city","state","share","equip"].forEach(id => $(id).addEventListener("input", calc));
   $("equip").addEventListener("focus", e => { if (e.target.value) e.target.value = String(parseNum(e.target.value)); });
   $("equip").addEventListener("blur", e => { if (e.target.value !== "") e.target.value = parseNum(e.target.value).toLocaleString("en-US"); calc(); });
-  window.addEventListener("beforeprint", buildReport);
+  window.addEventListener("beforeprint", setPdfTitle);
+  window.addEventListener("afterprint", restoreTitle);
   renderList(); calc();
 })();
 
