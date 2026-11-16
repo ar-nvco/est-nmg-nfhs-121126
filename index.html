@@ -325,7 +325,7 @@
    LOGO_SRC: paste a data URL (data:image/png;base64,...) to use the real
    logo. Leave empty to show the text wordmark.
    ===================================================================== */
-const APP_VERSION = "v3";  /* keep in sync with VERSION in sw.js */
+const APP_VERSION = "v4";  /* keep in sync with VERSION in sw.js */
 const CONFIG = {
   LOGO_SRC: "",  /* logo lives in the <img id="logoImg"> tag in the header */
   DEFAULT_SHARE: 50,
@@ -586,10 +586,13 @@ const APP_TITLE = document.title;
 function setPdfTitle(){ buildReport(); document.title = pdfFileName(); }
 function restoreTitle(){ document.title = APP_TITLE; }
 
+/* The page title stays set to the file name after printing. iPad Safari reads the
+   title when you tap Share in the print screen, after window.print() has already
+   returned, so restoring it right away would give the PDF a generic name.
+   The title resets only when a new estimate is started. */
 function savePdf(){
   setPdfTitle();
   window.print();
-  setTimeout(restoreTitle, 1500);
 }
 
 /* ---------- Reset ---------- */
@@ -598,6 +601,7 @@ function resetAll(){
   items = []; nextId = 1;
   $("venue").value = ""; $("city").value = ""; $("state").value = "";
   $("share").value = CONFIG.DEFAULT_SHARE; $("equip").value = "";
+  restoreTitle();
   renderList(); calc(); $("venue").focus();
 }
 /* Two-tap confirm instead of a blocking dialog */
@@ -626,7 +630,6 @@ function confirmReset(){
   $("equip").addEventListener("focus", e => { if (e.target.value) e.target.value = String(parseNum(e.target.value)); });
   $("equip").addEventListener("blur", e => { if (e.target.value !== "") e.target.value = parseNum(e.target.value).toLocaleString("en-US"); calc(); });
   window.addEventListener("beforeprint", setPdfTitle);
-  window.addEventListener("afterprint", restoreTitle);
   renderList(); calc();
 })();
 
