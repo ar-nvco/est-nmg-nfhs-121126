@@ -307,7 +307,7 @@
       <div class="res-actions">
         <button class="btn btn-primary" id="btnPdf">&#11015; Save as PDF</button>
       </div>
-      <div class="disclaimer">Estimates are for illustration only. Actual revenue depends on sponsorships sold and final agreement terms.</div>
+      <div class="disclaimer">Estimates are for illustration only. Actual revenue depends on sponsorships sold and final agreement terms.<span id="appVer" style="display:block;margin-top:6px;color:#B0B0B0"></span></div>
     </aside>
   </main>
   <div class="mbar">
@@ -325,6 +325,7 @@
    LOGO_SRC: paste a data URL (data:image/png;base64,...) to use the real
    logo. Leave empty to show the text wordmark.
    ===================================================================== */
+const APP_VERSION = "v3";  /* keep in sync with VERSION in sw.js */
 const CONFIG = {
   LOGO_SRC: "",  /* logo lives in the <img id="logoImg"> tag in the header */
   DEFAULT_SHARE: 50,
@@ -611,6 +612,7 @@ function confirmReset(){
 
 /* ---------- Init ---------- */
 (function init(){
+  const av = document.getElementById("appVer"); if (av) av.textContent = "Version " + APP_VERSION.replace("v","");
   const nj = document.getElementById("nojs"); if (nj) nj.parentNode.removeChild(nj);
   $("share").value = CONFIG.DEFAULT_SHARE;
   $("quick").innerHTML = CONFIG.QUICK_ADDS.map((q,i) =>
