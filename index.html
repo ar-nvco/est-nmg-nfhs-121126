@@ -61,6 +61,23 @@
     max-width: 1180px; margin: 18px auto 0; padding: 16px 20px; font-size: 15px; }
   .nojs b { color: var(--brand); }
 
+  /* ===== Current sponsorship questions ===== */
+  .sell-q { margin-top: 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .sell-q label { margin: 0; font-size: 14px; }
+  .yn { display: inline-flex; border: 1.5px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .yn button { border: 0; background: #fff; min-width: 76px; min-height: 44px; font-weight: 700; color: var(--muted); cursor: pointer; touch-action: manipulation; }
+  .yn button + button { border-left: 1.5px solid var(--line); }
+  .yn button.on { background: var(--brand); color: #fff; }
+  .sell-who { margin-top: 14px; }
+  .picks { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pick { border: 1.5px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 16px; min-height: 42px; font-size: 14px; font-weight: 600; cursor: pointer; touch-action: manipulation; }
+  .pick::before { content: "+ "; color: var(--muted); }
+  .pick.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .pick.on::before { content: "\2713  "; color: var(--brand-2); }
+  [hidden] { display: none !important; }
+  .rp-venue .sell { font-size: 10pt; color: var(--ink-2); margin-top: 6px; }
+  .rp-venue .sell b { color: var(--ink); }
+
   /* ===== Layout ===== */
   .wrap { max-width: 1180px; margin: 0 auto; padding: 22px 20px 40px; display: grid; grid-template-columns: 1fr 380px; gap: 22px; align-items: start; }
   .card { background: var(--card); border-radius: var(--radius); box-shadow: 0 1px 3px rgba(0,0,0,.08); padding: 20px; }
@@ -96,7 +113,7 @@
   .quick-legend .dot { width: 8px; height: 8px; }
   @keyframes flash { from { background: #FFE7DC; } to { background: transparent; } }
   .inv-row.flash { animation: flash .8s ease-out; }
-  .inv-head, .inv-row { display: grid; grid-template-columns: 2.7fr 1.4fr .7fr 1.2fr 1.1fr 44px; gap: 10px; align-items: center; }
+  .inv-head, .inv-row { display: grid; grid-template-columns: 2.3fr 1.3fr .6fr 1.1fr 1fr 1.1fr 44px; gap: 10px; align-items: center; }
   .inv-head { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 0 2px 8px; border-bottom: 1px solid var(--line); }
   .inv-row { padding: 10px 0; border-bottom: 1px solid var(--line); }
   .inv-row input { width: 100%; border: 1.5px solid var(--line); border-radius: 8px; padding: 10px; min-height: 44px; background: #fff; }
@@ -106,6 +123,8 @@
   .seg button.on.digital { background: var(--digital); color: #fff; }
   .seg button.on.static { background: var(--static); color: #fff; }
   .line-total { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .line-price { text-align: right; color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .line-price small { display: block; font-size: 11px; font-weight: 500; color: var(--muted); }
   .del { width: 44px; height: 44px; border: 0; background: transparent; border-radius: 8px; cursor: pointer; color: var(--muted); font-size: 22px; line-height: 1; }
   .del:hover { background: #FDEDE6; color: var(--brand); }
   .empty { text-align: center; color: var(--muted); padding: 24px 10px; font-size: 15px; }
@@ -148,10 +167,10 @@
     .topbar-actions .btn-ghost .lbl { display: none; }
     .grid-3, .grid-2 { grid-template-columns: 1fr; }
     .inv-head { display: none; }
-    .inv-row { grid-template-columns: 1fr 1fr; grid-template-areas: "name name" "type type" "qty price" "total del"; }
+    .inv-row { grid-template-columns: 1fr 1fr; grid-template-areas: "name name" "type type" "qty annual" "price price" "total del"; }
     .inv-row > :nth-child(1) { grid-area: name; } .inv-row > :nth-child(2) { grid-area: type; }
-    .inv-row > :nth-child(3) { grid-area: qty; } .inv-row > :nth-child(4) { grid-area: price; }
-    .inv-row > :nth-child(5) { grid-area: total; text-align: left; } .inv-row > :nth-child(6) { grid-area: del; justify-self: end; }
+    .inv-row > :nth-child(3) { grid-area: qty; } .inv-row > :nth-child(4) { grid-area: annual; }
+    .inv-row > :nth-child(5) { grid-area: price; text-align: left; } .inv-row > :nth-child(6) { grid-area: total; text-align: left; } .inv-row > :nth-child(7) { grid-area: del; justify-self: end; }
   }
 
 
@@ -165,7 +184,7 @@
     .mbar .v { font-size: 28px; font-weight: 800; color: var(--brand-2); font-variant-numeric: tabular-nums; line-height: 1.1; }
     .mbar .btn { min-height: 48px; }
   }
-  @media print { .mbar { display: none !important; } }
+  @media print { .mbar { display: none !important; } body { padding-bottom: 0 !important; } }
 
   /* ===== Print report (hidden on screen) ===== */
   #report { display: none; }
@@ -254,6 +273,26 @@
             <select id="state"><option value="">Select</option><option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option><option value="DC">DC</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option></select>
           </div>
         </div>
+        <div class="sell-q">
+          <label>Do you currently sell sponsorships?</label>
+          <div class="yn" id="sellYN">
+            <button type="button" data-v="yes">Yes</button>
+            <button type="button" data-v="no">No</button>
+          </div>
+        </div>
+        <div class="sell-who" id="sellWho" hidden>
+          <label>Who sells them? <span style="font-weight:500;color:var(--muted)">(select all that apply)</span></label>
+          <div class="picks" id="sellPicks">
+            <button type="button" class="pick" data-v="Athletic Department">Athletic Department</button>
+            <button type="button" class="pick" data-v="Booster Club">Booster Club</button>
+            <button type="button" class="pick" data-v="Coaches">Coaches</button>
+            <button type="button" class="pick" data-v="Teams">Teams</button>
+            <button type="button" class="pick" data-v="Others">Others</button>
+          </div>
+          <div class="field" id="sellOtherWrap" hidden style="margin-top:10px;max-width:420px">
+            <input id="sellOther" type="text" placeholder="Others: who? (optional)" autocomplete="off">
+          </div>
+        </div>
       </div>
 
       <div class="card">
@@ -261,11 +300,11 @@
         <div class="quick" id="quick"></div>
         <div class="quick-legend">Tap to add (tap again to add another). <i class="dot" style="background:var(--digital)"></i>Digital &nbsp; <i class="dot" style="background:#9A9A9A"></i>Static &nbsp; Prices are starting points and can be edited.</div>
         <div class="inv-head">
-          <div>Placement</div><div>Type</div><div class="num">Qty</div><div class="num">Price Each</div><div style="text-align:right">Total</div><div></div>
+          <div>Placement</div><div>Type</div><div class="num">Qty</div><div class="num">Annual Rate</div><div class="num">Price Each</div><div style="text-align:right">Total</div><div></div>
         </div>
         <div id="invList"></div>
         <div class="add-wrap"><button class="btn btn-outline" id="btnAdd">+ Add Inventory</button></div>
-        <div class="hint" style="margin-top:10px">Price Each = estimated sponsorship price per placement for a 5-year term.</div>
+        <div class="hint" style="margin-top:10px">Annual Rate = estimated sponsorship price per placement, per year. Price Each = Annual Rate &times; 5 (5-year term).</div>
       </div>
 
       <div class="card">
@@ -325,28 +364,29 @@
    LOGO_SRC: paste a data URL (data:image/png;base64,...) to use the real
    logo. Leave empty to show the text wordmark.
    ===================================================================== */
-const APP_VERSION = "v7";  /* keep in sync with VERSION in sw.js */
+const APP_VERSION = "v12";  /* keep in sync with VERSION in sw.js */
 const CONFIG = {
   LOGO_SRC: "",  /* logo lives in the <img id="logoImg"> tag in the header */
   DEFAULT_SHARE: 50,
+  TERM_YEARS: 5,        /* agreement length; Price Each = Annual Rate x TERM_YEARS */
   CONTACT: {
     name:  "Matthew LaNeve",
     title: "NMG General Manager",
     phone: "719-291-6178",
     email: "mlaneve@nevco.com"
   },
-  /* Preset inventory: name, type, starting price (full agreement term) */
+  /* Preset inventory: name, type, starting ANNUAL rate per placement */
   QUICK_ADDS: [
-    { name: "Football Scoreboard",   type: "static",  price: 5000 },
-    { name: "Football Digital",      type: "digital", price: 3500 },
-    { name: "Basketball Scoreboard", type: "static",  price: 4000 },
-    { name: "Basketball Digital",    type: "digital", price: 3500 },
-    { name: "LED Table",             type: "digital", price: 3500 },
-    { name: "Soccer Scoreboard",     type: "static",  price: 3500 },
-    { name: "Baseball Scoreboard",   type: "static",  price: 3500 },
-    { name: "Softball Scoreboard",   type: "static",  price: 3500 },
-    { name: "Outdoor Banners",       type: "static",  price: 3000 },
-    { name: "Indoor Banners",        type: "static",  price: 3000 }
+    { name: "Football Scoreboard",   type: "static",  price: 1000 },
+    { name: "Football Digital",      type: "digital", price: 700 },
+    { name: "Basketball Scoreboard", type: "static",  price: 800 },
+    { name: "Basketball Digital",    type: "digital", price: 700 },
+    { name: "LED Table",             type: "digital", price: 700 },
+    { name: "Soccer Scoreboard",     type: "static",  price: 700 },
+    { name: "Baseball Scoreboard",   type: "static",  price: 700 },
+    { name: "Softball Scoreboard",   type: "static",  price: 700 },
+    { name: "Outdoor Banners",       type: "static",  price: 600 },
+    { name: "Indoor Banners",        type: "static",  price: 600 }
   ]
 };
 
@@ -381,7 +421,7 @@ function addItem(preset){
       return;
     }
   }
-  const it = { id: nextId++, preset: preset ? preset.name : null, name: preset ? preset.name : "", type: preset ? preset.type : "static", qty: 1, price: preset && preset.price ? preset.price : "" };
+  const it = { id: nextId++, preset: preset ? preset.name : null, name: preset ? preset.name : "", type: preset ? preset.type : "static", qty: 1, annual: preset && preset.price ? preset.price : "" };
   items.push(it);
   renderList();
   // focus the most useful empty field
@@ -409,13 +449,16 @@ function renderList(){
         <button type="button" class="static ${it.type==="static"?"on":""}" data-type="static">Static</button>
       </div>
       <input class="f-qty num" type="number" inputmode="numeric" min="0" step="1" value="${it.qty}">
-      <input class="f-price num" type="text" inputmode="decimal" placeholder="$0" value="${it.price === "" ? "" : money(it.price)}" autocomplete="off">
+      <input class="f-annual num" type="text" inputmode="decimal" placeholder="$0" value="${it.annual === "" ? "" : money(it.annual)}" autocomplete="off">
+      <div class="line-price">${termText(it)}</div>
       <div class="line-total">${money(lineTotal(it))}</div>
       <button type="button" class="del" title="Remove">&times;</button>
     </div>`).join("");
 }
 
-const lineTotal = (it) => (parseNum(it.qty) || 0) * (parseNum(it.price) || 0);
+const termPrice = (it) => (parseNum(it.annual) || 0) * CONFIG.TERM_YEARS;   /* Price Each = Annual Rate x term */
+const termText = (it) => `${money(termPrice(it))}<small>(${CONFIG.TERM_YEARS} year term)</small>`;
+const lineTotal = (it) => (parseNum(it.qty) || 0) * termPrice(it);
 
 /* Event delegation for inventory rows */
 $("invList").addEventListener("input", (e) => {
@@ -423,15 +466,16 @@ $("invList").addEventListener("input", (e) => {
   const it = items.find(i => i.id === +row.dataset.id); if (!it) return;
   if (e.target.classList.contains("f-name")) { it.name = e.target.value; it.preset = null; }
   if (e.target.classList.contains("f-qty")) it.qty = e.target.value;
-  if (e.target.classList.contains("f-price")) it.price = e.target.value === "" ? "" : parseNum(e.target.value);
+  if (e.target.classList.contains("f-annual")) it.annual = e.target.value === "" ? "" : parseNum(e.target.value);
   row.querySelector(".line-total").textContent = money(lineTotal(it));
+  row.querySelector(".line-price").innerHTML = termText(it);
   calc();
 });
 $("invList").addEventListener("focusin", (e) => {
-  if (e.target.classList.contains("f-price") && e.target.value) e.target.value = String(parseNum(e.target.value));
+  if (e.target.classList.contains("f-annual") && e.target.value) e.target.value = String(parseNum(e.target.value));
 });
 $("invList").addEventListener("focusout", (e) => {
-  if (e.target.classList.contains("f-price") && e.target.value !== "") e.target.value = money(parseNum(e.target.value));
+  if (e.target.classList.contains("f-annual") && e.target.value !== "") e.target.value = money(parseNum(e.target.value));
 });
 $("invList").addEventListener("click", (e) => {
   const row = e.target.closest(".inv-row"); if (!row) return;
@@ -463,6 +507,23 @@ function compute(){
   return { valid, sales, digital, stat, pct, equip, equipFunded, shareBase, revenue, totalValue: revenue + equipFunded, equipCovered };
 }
 
+/* ---------- Current sponsorship questions ---------- */
+let sellsNow = null;            /* "yes" | "no" | null (unanswered) */
+const sellers = new Set();
+function renderSell(){
+  document.querySelectorAll("#sellYN button").forEach(b => b.classList.toggle("on", b.dataset.v === sellsNow));
+  $("sellWho").hidden = sellsNow !== "yes";
+  document.querySelectorAll("#sellPicks .pick").forEach(b => b.classList.toggle("on", sellers.has(b.dataset.v)));
+  $("sellOtherWrap").hidden = !(sellsNow === "yes" && sellers.has("Others"));
+}
+function sellSummary(){
+  if (sellsNow === "no") return "No";
+  if (sellsNow !== "yes") return "";
+  const other = $("sellOther").value.trim();
+  const list = [...sellers].map(v => v === "Others" && other ? `Others (${other})` : v);
+  return list.length ? "Yes: " + list.join(", ") : "Yes";
+}
+
 function venueParts(){
   const name = $("venue").value.trim();
   const city = $("city").value.trim();
@@ -478,11 +539,11 @@ function calc(){
   $("rVenue").innerHTML = v.name ? `${esc(v.name)}${v.loc ? `<small>${esc(v.loc)}</small>` : ""}` : `<span style="color:#888">Your Venue</span>`;
 
   if (r.equip > 0){
-    $("rHeroLabel").textContent = "Total Value to Your Venue";
+    $("rHeroLabel").textContent = "Estimated Total Value to Your Venue (Typical)";
     $("rHero").textContent = money(r.totalValue);
     $("rHeroSub").textContent = `${money(r.equipFunded)} in equipment + ${money(r.revenue)} revenue share`;
   } else {
-    $("rHeroLabel").textContent = "Revenue to Your Venue";
+    $("rHeroLabel").textContent = "Estimated Revenue to Your Venue (Typical)";
     $("rHero").textContent = money(r.revenue);
     $("rHeroSub").textContent = `${r.pct}% share of ${money(r.sales)} in sponsorship sales`;
   }
@@ -518,15 +579,16 @@ function buildReport(){
       <td>${esc(i.name || "Sponsorship Placement")}</td>
       <td><span class="tag ${i.type}">${i.type === "digital" ? "Digital" : "Static"}</span></td>
       <td class="r">${parseNum(i.qty).toLocaleString()}</td>
-      <td class="r">${money(parseNum(i.price))}</td>
+      <td class="r">${money(parseNum(i.annual))}</td>
+      <td class="r">${money(termPrice(i))}</td>
       <td class="r">${money(lineTotal(i))}</td>
-    </tr>`).join("") || `<tr><td colspan="5" style="color:#888">No inventory entered.</td></tr>`;
+    </tr>`).join("") || `<tr><td colspan="6" style="color:#888">No inventory entered.</td></tr>`;
 
   const hero = r.equip > 0 ? `
-      <div class="main"><div class="k">Total Value to Your Venue</div><div class="v">${money(r.totalValue)}</div><div class="s">Equipment + revenue share</div></div>
+      <div class="main"><div class="k">Estimated Total Value to Your Venue (Typical)</div><div class="v">${money(r.totalValue)}</div><div class="s">Equipment + revenue share</div></div>
       <div><div class="k">Equipment Funded</div><div class="v">${money(r.equipFunded)}</div><div class="s">${Math.round(r.equipCovered)}% of ${money(r.equip)} investment</div></div>
       <div><div class="k">Revenue Share</div><div class="v">${money(r.revenue)}</div><div class="s">${r.pct}% after equipment</div></div>` : `
-      <div class="main"><div class="k">Revenue to Your Venue</div><div class="v">${money(r.revenue)}</div><div class="s">${r.pct}% revenue share</div></div>
+      <div class="main"><div class="k">Estimated Revenue to Your Venue (Typical)</div><div class="v">${money(r.revenue)}</div><div class="s">${r.pct}% revenue share</div></div>
       <div><div class="k">Total Sponsorship Sales</div><div class="v">${money(r.sales)}</div><div class="s">${r.valid.length} inventory line${r.valid.length===1?"":"s"}</div></div>`;
 
   const sum = r.equip > 0 ? `
@@ -534,12 +596,12 @@ function buildReport(){
       <tr><td>Equipment Funded by Sponsorships</td><td>${money(r.equipFunded)}</td></tr>
       <tr><td>Sales Applied to Revenue Share</td><td>${money(r.shareBase)}</td></tr>
       <tr><td>Revenue Share to Venue (${r.pct}%)</td><td>${money(r.revenue)}</td></tr>
-      <tr class="grand"><td>Total Value to Venue</td><td>${money(r.totalValue)}</td></tr>` : `
+      <tr class="grand"><td>Est. Total Value (Typical)</td><td>${money(r.totalValue)}</td></tr>` : `
       <tr><td>Digital Sponsorship Sales</td><td>${money(r.digital)}</td></tr>
       <tr><td>Static Sponsorship Sales</td><td>${money(r.stat)}</td></tr>
       <tr><td>Total Sponsorship Sales</td><td>${money(r.sales)}</td></tr>
       <tr><td>Revenue Share</td><td>${r.pct}%</td></tr>
-      <tr class="grand"><td>Revenue to Venue</td><td>${money(r.revenue)}</td></tr>`;
+      <tr class="grand"><td>Est. Revenue to Venue (Typical)</td><td>${money(r.revenue)}</td></tr>`;
 
   $("report").classList.toggle("dense", r.valid.length > 9);
   $("report").classList.toggle("xdense", r.valid.length > 12);
@@ -552,13 +614,14 @@ function buildReport(){
       <div class="k">Prepared for</div>
       <div class="v">${esc(v.name || "Your Venue")}</div>
       ${v.loc ? `<div class="loc">${esc(v.loc)}</div>` : ""}
+      ${sellSummary() ? `<div class="sell"><b>Currently sells sponsorships:</b> ${esc(sellSummary())}</div>` : ""}
     </div>
     <div class="rp-hero">${hero}</div>
     <div class="rp-h">Advertising Inventory (5-Year Terms)</div>
     <table class="rp-table">
-      <thead><tr><th>Placement</th><th>Type</th><th class="r">Qty</th><th class="r">Price Each</th><th class="r">Total</th></tr></thead>
+      <thead><tr><th>Placement</th><th>Type</th><th class="r">Qty</th><th class="r">Annual Rate</th><th class="r">Price Each (${CONFIG.TERM_YEARS}-Yr Term)</th><th class="r">Total</th></tr></thead>
       <tbody>${rowsHTML}</tbody>
-      <tfoot><tr><td colspan="4">Total Sponsorship Sales</td><td class="r">${money(r.sales)}</td></tr></tfoot>
+      <tfoot><tr><td colspan="5">Total Sponsorship Sales</td><td class="r">${money(r.sales)}</td></tr></tfoot>
     </table>
     <div class="rp-bottom">
       <div class="rp-foot">
@@ -606,6 +669,7 @@ function resetAll(){
   if (items.length || $("venue").value) { if (!confirmReset()) return; }
   items = []; nextId = 1;
   $("venue").value = ""; $("city").value = ""; $("state").value = "";
+  sellsNow = null; sellers.clear(); $("sellOther").value = ""; renderSell();
   $("share").value = CONFIG.DEFAULT_SHARE; $("equip").value = "";
   restoreTitle();
   renderList(); calc(); $("venue").focus();
@@ -633,6 +697,16 @@ function confirmReset(){
   $("mView").addEventListener("click", () => document.querySelector(".results").scrollIntoView({ behavior: "smooth", block: "start" }));
   $("btnReset").addEventListener("click", resetAll);
   ["venue","city","state","share","equip"].forEach(id => $(id).addEventListener("input", calc));
+  $("sellYN").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    sellsNow = (sellsNow === b.dataset.v) ? null : b.dataset.v;   /* tap again to clear */
+    renderSell();
+  });
+  $("sellPicks").addEventListener("click", (e) => {
+    const b = e.target.closest(".pick"); if (!b) return;
+    const v = b.dataset.v; sellers.has(v) ? sellers.delete(v) : sellers.add(v);
+    renderSell();
+  });
   $("equip").addEventListener("focus", e => { if (e.target.value) e.target.value = String(parseNum(e.target.value)); });
   $("equip").addEventListener("blur", e => { if (e.target.value !== "") e.target.value = parseNum(e.target.value).toLocaleString("en-US"); calc(); });
   window.addEventListener("beforeprint", setPdfTitle);
